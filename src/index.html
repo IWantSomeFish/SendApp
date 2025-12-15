@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<head>
-  <title>SendApp</title>
-</head>
-<body>
-  <h1>Welcome to the clown show</h1>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Electron App</title>
+  </head>
+  <body>
+    <!-- React будет владеть этим div -->
+    <div id="root"></div>
 
+    <!-- renderer bundle -->
+
+    <script type="module" src="./renderer/index.js"></script>
+  </body>
 </html>
