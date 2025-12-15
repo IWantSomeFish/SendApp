@@ -1,12 +1,8 @@
-# electron-typescript-guide
-A sample project to introduce you to Electron in combination with Typescript.
+# Electron + React local file sender
 
-## How to start
+# How to start
+1. Install all packages 
+yarn add
 
-1. Install all packages
-   
-        npm install
-
-2. Run the electron application
-
-        npm start
+2. Run the application
+yarn start
