@@ -5,7 +5,7 @@
   "author": {
     "name": "Batajus"
   },
-  "main": "build/index.js",
+  "main": "build/electron/index.js",
   "scripts": {
     "compile": "tsc && copyfiles -f src/index.html build",
     "start": "npm run compile && electron ."
@@ -19,6 +19,7 @@
   "dependencies": {
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "react": "^19.2.3"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   }
 }

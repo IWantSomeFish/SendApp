@@ -9,7 +9,9 @@
     <div id="root"></div>
 
     <!-- renderer bundle -->
-
-    <script type="module" src="./renderer/index.js"></script>
+    <script>
+      // Load renderer bundle via Node `require` (works with nodeIntegration:true)
+      try { require('./renderer/index.js'); } catch (e) { /* fail quietly */ }
+    </script>
   </body>
 </html>
