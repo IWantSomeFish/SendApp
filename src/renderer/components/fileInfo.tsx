@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import React from 'react';
+import FileUpdater from './fileUpdater';
 
 const FileInfo: any = () => {
   return (
@@ -8,9 +9,7 @@ const FileInfo: any = () => {
         Кнопка тута будет
       </div>
       <div style={{height: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Button variant="contained" color="primary">
-          Выбрать файл
-        </Button>
+        <FileUpdater />
       </div>
     </div>
   );

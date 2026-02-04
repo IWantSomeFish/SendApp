@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
+import { DiscoveryService } from "./discoveryService";
 
 function createWindow() {
 
@@ -8,7 +9,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
     }
   });
 
@@ -18,5 +19,8 @@ function createWindow() {
 
 }
 
-app.whenReady().then(createWindow);
-
+app.whenReady().then(() => {
+  createWindow();
+  const discovery = new DiscoveryService(9000)
+  discovery.start()
+});
