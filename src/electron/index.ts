@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { DiscoveryService } from "./discoveryService";
 
@@ -16,11 +16,19 @@ function createWindow() {
   const indexHTML = path.join(__dirname, "..", "index.html");
   win.removeMenu();
   win.loadFile(indexHTML);
-
 }
 
 app.whenReady().then(() => {
-  createWindow();
   const discovery = new DiscoveryService(9000)
   discovery.start()
+
+  ipcMain.handle('discovery:getPeers', () => {
+    console.log(discovery.getPeers())
+    discovery.getPeers()
+  })
+
+  ipcMain.handle('discovery:discover', () => {
+    discovery.discover()
+  })
+  createWindow()
 });
