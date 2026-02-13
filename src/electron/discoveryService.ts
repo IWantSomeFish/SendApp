@@ -58,7 +58,6 @@ export class DiscoveryService {
     this.startCleanup()
     this.discover()
     console.log('Discovery service started')
-    console.log(this)
   }
 
   stop() {
