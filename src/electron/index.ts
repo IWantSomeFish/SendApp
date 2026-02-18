@@ -23,10 +23,9 @@ app.whenReady().then(() => {
   discovery.start()
 
   ipcMain.handle('discovery:getPeers', () => {
-    console.log(discovery.getPeers())
-    discovery.getPeers()
+    console.log('peers: ', discovery.getPeers())
+    return discovery.getPeers()
   })
-
   ipcMain.handle('discovery:discover', () => {
     discovery.discover()
   })
