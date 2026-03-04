@@ -1,0 +1,37 @@
+[
+  {
+    "id": "1709547600000",
+    "fileName": "presentation.pptx",
+    "peer": "Alice",
+    "timestamp": 1709547600000,
+    "type": "sent"
+  },
+  {
+    "id": "1709548200000",
+    "fileName": "project_report.pdf",
+    "peer": "Bob",
+    "timestamp": 1709548200000,
+    "type": "received"
+  },
+  {
+    "id": "1709548800000",
+    "fileName": "photo_vacation.jpg",
+    "peer": "Charlie",
+    "timestamp": 1709548800000,
+    "type": "sent"
+  },
+  {
+    "id": "1709549400000",
+    "fileName": "data_analysis.xlsx",
+    "peer": "Diana",
+    "timestamp": 1709549400000,
+    "type": "received"
+  },
+  {
+    "id": "1709550000000",
+    "fileName": "meeting_notes.docx",
+    "peer": "Edward",
+    "timestamp": 1709550000000,
+    "type": "sent"
+  }
+]

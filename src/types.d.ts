@@ -4,6 +4,10 @@ declare global {
       getPeers: () => Promise<any[]>;
       discover: () => Promise<void>;
     };
+    fileLogs: {
+      getLogs: () => Promise<any[]>;
+      addLog: (log: any) => Promise<any>;
+    };
   }
 }
 

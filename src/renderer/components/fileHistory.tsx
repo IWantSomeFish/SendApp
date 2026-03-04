@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+const { ipcRenderer } = require('electron');
 
 const regularTextStyle = {
   fontFamily: 'Arial, sans-serif',
@@ -23,46 +24,33 @@ interface FileHistoryProps {
 
 const FileHistory: React.FC<FileHistoryProps> = ({ onBack }) => {
   const [logs, setLogs] = React.useState<FileLog[]>([]);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const storedLogs = localStorage.getItem('fileLogs');
-    if (storedLogs) {
-      setLogs(JSON.parse(storedLogs));
-    } else {
-      // Фейковые логи для демонстрации
-      const fakeLogs: FileLog[] = [
-        {
-          id: '1',
-          fileName: 'example.txt',
-          peer: 'Peer1',
-          timestamp: Date.now() - 3600000, // 1 час назад
-          type: 'sent',
-        },
-        {
-          id: '2',
-          fileName: 'image.jpg',
-          peer: 'Peer2',
-          timestamp: Date.now() - 1800000, // 30 мин назад
-          type: 'received',
-        },
-        {
-          id: '3',
-          fileName: 'document.pdf',
-          peer: 'Peer3',
-          timestamp: Date.now() - 600000, // 10 мин назад
-          type: 'sent',
-        },
-      ];
-      setLogs(fakeLogs);
-      localStorage.setItem('fileLogs', JSON.stringify(fakeLogs));
-    }
+    const fetchLogs = async () => {
+      console.log('FileHistory: Fetching logs...');
+      try {
+        const ipcLogs = await ipcRenderer.invoke('file:getLogs');
+        console.log('FileHistory: Got logs:', ipcLogs);
+        setLogs(ipcLogs);
+      } catch (error) {
+        console.error('FileHistory: Failed to fetch logs:', error);
+        setLogs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLogs();
   }, []);
 
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <div style={regularTextStyle}>История файлов:</div>
       <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '60vh', overflowY: 'auto' }}>
-        {logs.length > 0 ? (
+        {loading ? (
+          <div style={regularTextStyle}>Загрузка...</div>
+        ) : logs.length > 0 ? (
           logs.map((log) => (
             <div key={log.id} style={{ padding: '10px', backgroundColor: '#83c5fcff', borderRadius: '5px', minWidth: '300px' }}>
               <div style={regularTextStyle}>{log.type === 'sent' ? 'Отправлен' : 'Получен'}: {log.fileName}</div>
