@@ -62,12 +62,12 @@ const FileInfo: any = () => {
 };
   return (
     <div style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column'}}>
-      {selectedFile && peers.length > 0 ? (
+      {selectedFile ? (
         <PeersList peers={peers} onSend={handleSend} onCancel={handleCancel} />
       ) : (
         <>
-          <div style={{height: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={regularTextStyle}>{peers.length > 0 ? `Найдено ${peers.length} пиров` : 'Пиры не найдены'}</div>
+          <div hidden={isHidden} style={{height: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={regularTextStyle}>{selectedFile ? `Выбран файл: ${selectedFile}` : 'Файл не выбран'}</div>
           </div>
           <div hidden={isHidden}>
             <div style={{height: '30vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'} }>

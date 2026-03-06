@@ -19,11 +19,15 @@ interface PeersListProps {
 const PeersList: React.FC<PeersListProps> = ({ peers, onSend, onCancel }) => {
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={regularTextStyle}>Выберите пир для отправки:</div>
-      <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {peers.map((peer) => (
-          <Button
-            key={peer.id}
+      {peers.length === 0 ? (
+        <div style={regularTextStyle}>Нет доступных пиров для отправки</div>
+      ) : (
+        <>
+          <div style={regularTextStyle}>Выберите пир для отправки:</div>
+          <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {peers.map((peer) => (
+              <Button
+                key={peer.id}
             variant="contained"
             color="primary"
             onClick={() => onSend(peer)}
@@ -32,17 +36,14 @@ const PeersList: React.FC<PeersListProps> = ({ peers, onSend, onCancel }) => {
             <div style={regularTextStyle}>{peer.hostname} ({peer.ip}:{peer.port})</div>
           </Button>
         ))}
-      </div>
-      <Button
-        variant="outlined"
-        color="secondary"
-        onClick={onCancel}
-        style={{ marginTop: '20px', minWidth: '200px' }}
-      >
+          </div>
+        </>
+      )}
+      <Button variant="outlined" color="secondary" onClick={onCancel} style={{ marginTop: '20px', minWidth: '200px' }}>
         <div style={regularTextStyle}>Отмена</div>
       </Button>
     </div>
   );
-};
+}
 
 export default PeersList;
