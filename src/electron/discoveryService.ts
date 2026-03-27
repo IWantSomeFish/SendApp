@@ -52,7 +52,7 @@ export class DiscoveryService {
 
   /* ---------- PUBLIC API ---------- */
 
-  start() {
+  start(): void {
     this.bindSocket()
     this.startAnnounce()
     this.startCleanup()
@@ -60,7 +60,7 @@ export class DiscoveryService {
     console.log('Discovery service started')
   }
 
-  stop() {
+  stop(): void {
     this.announceTimer && clearInterval(this.announceTimer)
     this.cleanupTimer && clearInterval(this.cleanupTimer)
     this.socket.close()
@@ -71,7 +71,7 @@ export class DiscoveryService {
     return [...this.peers.values()]
   }
 
-  discover() {
+  discover(): void {
     const msg: DiscoveryMessage = {
       type: 'DISCOVER',
       magic: APP_MAGIC,
@@ -84,10 +84,10 @@ export class DiscoveryService {
 
   /* ---------- INTERNAL ---------- */
 
-  private bindSocket() {
-    this.socket.on('message', (msg, rinfo) =>
+  private bindSocket(): void {
+    this.socket.on('message', (msg: Buffer, rinfo: dgram.RemoteInfo) => {
       this.handleMessage(msg, rinfo)
-    )
+    })
 
     this.socket.bind(DISCOVERY_PORT, () => {
       this.socket.addMembership(MULTICAST_ADDR)
@@ -124,7 +124,7 @@ export class DiscoveryService {
     }
   }
 
-  private sendResponse(ip: string, port: number) {
+  private sendResponse(ip: string, port: number): void {
     const msg: DiscoveryMessage = {
       type: 'RESPONSE',
       magic: APP_MAGIC,
@@ -141,7 +141,7 @@ export class DiscoveryService {
     )
   }
 
-  private startAnnounce() {
+  private startAnnounce(): void {
     this.announceTimer = setInterval(() => {
       const msg: DiscoveryMessage = {
         type: 'ANNOUNCE',
@@ -156,7 +156,7 @@ export class DiscoveryService {
     }, ANNOUNCE_INTERVAL)
   }
 
-  private startCleanup() {
+  private startCleanup(): void {
     this.cleanupTimer = setInterval(() => {
       const now = Date.now()
       for (const [id, peer] of this.peers) {
@@ -170,7 +170,7 @@ export class DiscoveryService {
   private registerPeer(
     data: Extract<DiscoveryMessage, { tcpPort: number }>,
     ip: string
-  ) {
+  ): void {
     this.peers.set(data.senderId, {
       id: data.senderId,
       ip,
@@ -180,7 +180,7 @@ export class DiscoveryService {
     })
   }
 
-  private send(msg: DiscoveryMessage) {
+  private send(msg: DiscoveryMessage): void {
     this.socket.send(
       Buffer.from(JSON.stringify(msg)),
       DISCOVERY_PORT,
